@@ -1,10 +1,4 @@
-// next.config.mjs
-
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-  basePath: '/nidhi-abhishek',
-  // other configurations if needed
-}
+const nextConfig = {};
 
 export default nextConfig;
