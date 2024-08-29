@@ -1,0 +1,30 @@
+/* src/components/WeddingInvitation.module.css */
+.wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .imageContainer img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .contentContainer {
+    text-align: center;
+    font-size: x-large;
+    margin-top: 1rem;
+  }
+  
+  .decorativeDivider {
+    border-top: 2px solid #d43f5e;
+    width: 50%;
+    margin: 20px auto;
+  }
+  
+  .venueInfo,
+  .dateInfo,
+  .section {
+    margin-top: 20px;
+  }
+  
