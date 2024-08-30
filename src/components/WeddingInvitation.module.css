@@ -1,30 +1,75 @@
 /* src/components/WeddingInvitation.module.css */
+
 .wrapper {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .imageContainer img {
-    max-width: 100%;
-    height: auto;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffe6e9; /* Light pink background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.imageContainer img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.contentContainer {
+  text-align: center;
+  font-size: x-large;
+  color: #333;
+  margin-top: 1rem;
+}
+
+.decorativeDivider {
+  border-top: 2px solid #d43f5e; /* Darker pink divider */
+  width: 50%;
+  margin: 20px auto;
+}
+
+.venueInfo,
+.dateInfo,
+.section {
+  margin-top: 20px;
+  background-color: #ffffff; /* White background for sections */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.venueInfo h3,
+.dateInfo h3,
+.section h3 {
+  color: #d43f5e; /* Darker pink for headers */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.venueInfo p,
+.dateInfo p {
+  color: #555; /* Darker text for better readability */
+  margin: 5px 0;
+}
+
+.mapContainer {
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
   .contentContainer {
-    text-align: center;
-    font-size: x-large;
-    margin-top: 1rem;
+    font-size: large; /* Smaller font size for mobile */
   }
   
   .decorativeDivider {
-    border-top: 2px solid #d43f5e;
-    width: 50%;
-    margin: 20px auto;
+    width: 70%; /* Wider divider on mobile */
   }
   
   .venueInfo,
   .dateInfo,
   .section {
-    margin-top: 20px;
+    margin-top: 15px;
+    padding: 10px;
   }
-  
+}

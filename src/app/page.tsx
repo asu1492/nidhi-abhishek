@@ -29,36 +29,40 @@ export default function Home() {
         <title>Home | My Next.js App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '20px', backgroundColor: '#fff7f8' }}>
         <img 
           src="https://res.cloudinary.com/dg1nnxhed/image/upload/v1724970508/images_u5bn2f.jpg" 
           alt="Lord Ganesha" 
-          style={{ width: '150px', height: '150px', marginBottom: '20px' }}
+          style={{ width: '150px', height: '150px', marginBottom: '20px', borderRadius: '50%' }}
         />
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <div
-            style={{ border: '1px solid black', padding: '20px', cursor: 'pointer' }}
+            style={{ border: '1px solid #d43f5e', padding: '20px', cursor: 'pointer', backgroundColor: '#ffe6e9', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
             onClick={() => setActiveComponent('wedding')}
           >
-            <h2>Wedding Invitation</h2>
+            <h2 style={{ color: '#d43f5e' }}>Wedding Invitation</h2>
           </div>
           <div
-            style={{ border: '1px solid black', padding: '20px', cursor: 'pointer' }}
+            style={{ border: '1px solid #d43f5e', padding: '20px', cursor: 'pointer', backgroundColor: '#ffe6e9', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
             onClick={() => setActiveComponent('gift')}
           >
-            <h2>Gift Section</h2>
+            <h2 style={{ color: '#d43f5e' }}>Gift Section</h2>
           </div>
           <div
-            style={{ border: '1px solid black', padding: '20px', cursor: 'pointer' }}
+            style={{ border: '1px solid #d43f5e', padding: '20px', cursor: 'pointer', backgroundColor: '#ffe6e9', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
             onClick={() => setActiveComponent('rsvp')}
           >
-            <h2>RSVP Section</h2>
+            <h2 style={{ color: '#d43f5e' }}>RSVP Section</h2>
           </div>
         </div>
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px', width: '100%', maxWidth: '800px' }}>
           {renderActiveComponent()}
         </div>
       </div>
+       {/* Footer Section */}
+       <footer style={{ marginTop: '20px', textAlign: 'center', padding: '10px 0', backgroundColor: '#ffe6e9', width: '100%', borderTop: '1px solid #d43f5e' }}>
+        <p>&copy; 2024 Wedding of Nidhi & Abhishek. All Rights Reserved.</p>
+      </footer>
     </>
   );
 }
