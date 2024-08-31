@@ -3,6 +3,7 @@
 import { FC } from 'react'; // Import FC (Function Component) type
 import styles from './WeddingInvitation.module.css';
 import { FaRegHandshake } from 'react-icons/fa';
+import Image from 'next/image';
 
 // Define prop types for WeddingInvitation
 interface WeddingInvitationProps {
@@ -13,7 +14,7 @@ const WeddingInvitation: FC<WeddingInvitationProps> = ({ setActiveComponent }) =
   return (
     <div className={styles.wrapper}>
       <div className={styles.imageContainer}>
-        <img
+      <Image
           src="https://res.cloudinary.com/dg1nnxhed/image/upload/v1724941845/Screenshot_2024-08-29_at_8.00.20_PM_uiabxj.png"
           alt="Wedding Invitation Image"
         />

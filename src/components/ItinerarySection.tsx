@@ -63,7 +63,7 @@ const ItinerarySection = () => {
           <h3 className={styles.date}>{eventDay.date}</h3>
           <div className={styles.eventsContainer}>
             <div className={styles.column}>
-              <h4>Abhishek's Function</h4>
+            <h4>Abhishek&apos;s Function</h4>
               {eventDay.abhishekEvents.map((event, i) => (
                 <div key={i} className={styles.event}>
                   <div className={styles.time}>{event.time}</div>
@@ -72,7 +72,7 @@ const ItinerarySection = () => {
               ))}
             </div>
             <div className={styles.column}>
-              <h4>Nidhi's Function</h4>
+            <h4>Nidhi&apos;s Function</h4>
               {eventDay.nidhiEvents.map((event, i) => (
                 <div key={i} className={styles.event}>
                   <div className={styles.time}>{event.time}</div>
