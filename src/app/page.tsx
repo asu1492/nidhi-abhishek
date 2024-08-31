@@ -1,4 +1,3 @@
-// src/app/page.tsx
 "use client";
 
 import { useState } from 'react';
@@ -6,63 +5,84 @@ import Head from 'next/head';
 import WeddingInvitation from '../components/WeddingInvitation';
 import GiftSection from '../components/GiftSection';
 import RSVPSection from '../components/RSVPSection';
+import ItinerarySection from '../components/ItinerarySection';
+import { FaGift, FaRegHandshake, FaHeart } from 'react-icons/fa';
 
 export default function Home() {
-  const [activeComponent, setActiveComponent] = useState('wedding');
+  const [activeComponent, setActiveComponent] = useState<string>('wedding');
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
       case 'wedding':
-        return <WeddingInvitation />;
+        return <WeddingInvitation setActiveComponent={setActiveComponent} />;
+      case 'itinerary':
+        return <ItinerarySection/>;
       case 'gift':
         return <GiftSection />;
       case 'rsvp':
         return <RSVPSection />;
       default:
-        return <WeddingInvitation />;
+        return <WeddingInvitation setActiveComponent={setActiveComponent} />;
     }
   };
 
   return (
     <>
       <Head>
-        <title>Home | My Next.js App</title>
+        <title>Wedding Invitation | Nidhi & Abhishek</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '20px', backgroundColor: '#fff7f8' }}>
-        <img 
-          src="https://res.cloudinary.com/dg1nnxhed/image/upload/v1724970508/images_u5bn2f.jpg" 
-          alt="Lord Ganesha" 
-          style={{ width: '150px', height: '150px', marginBottom: '20px', borderRadius: '50%' }}
-        />
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div
-            style={{ border: '1px solid #d43f5e', padding: '20px', cursor: 'pointer', backgroundColor: '#ffe6e9', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-            onClick={() => setActiveComponent('wedding')}
-          >
-            <h2 style={{ color: '#d43f5e' }}>Wedding Invitation</h2>
+      
+      <div className="relative min-h-screen bg-white flex flex-col">
+        {/* Header Section */}
+        <header className="bg-[#d43f5e] py-5 text-white text-center relative">
+        <p className="m-0 text-xl">Wedding Celebration</p>
+          <h1 className="m-0 font-[Brush Script MT] text-4xl mt-4">Nidhi & Abhishek</h1>
+          {/* Navigation Links */}
+          <div className="flex flex-row gap-4 mt-4 justify-center">
+            <div
+              className="cursor-pointer flex items-center gap-1 text-white underline"
+              onClick={() => setActiveComponent('wedding')}
+            >
+              <FaHeart size={20} />
+              <span>Invitation</span>
+            </div>
+            <div
+              className="cursor-pointer flex items-center gap-1 text-white underline"
+              onClick={() => setActiveComponent('rsvp')}
+            >
+              <FaRegHandshake size={20} />
+              <span>RSVP</span>
+            </div>
+            <div
+              className="cursor-pointer flex items-center gap-1 text-white underline"
+              onClick={() => setActiveComponent('itinerary')}
+            >
+              <FaRegHandshake size={20} />
+              <span>Itinerary</span>
+            </div>
+            <div
+              className="cursor-pointer flex items-center gap-1 text-white underline"
+              onClick={() => setActiveComponent('gift')}
+            >
+              <FaGift size={20} />
+              <span>Gift</span>
+            </div>
           </div>
-          <div
-            style={{ border: '1px solid #d43f5e', padding: '20px', cursor: 'pointer', backgroundColor: '#ffe6e9', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-            onClick={() => setActiveComponent('gift')}
-          >
-            <h2 style={{ color: '#d43f5e' }}>Gift Section</h2>
+        </header>
+
+        {/* Main Content Area */}
+        <main className="flex-grow flex justify-center items-center p-10">
+          <div className="w-full max-w-xl text-center">
+            {renderActiveComponent()}
           </div>
-          <div
-            style={{ border: '1px solid #d43f5e', padding: '20px', cursor: 'pointer', backgroundColor: '#ffe6e9', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}
-            onClick={() => setActiveComponent('rsvp')}
-          >
-            <h2 style={{ color: '#d43f5e' }}>RSVP Section</h2>
-          </div>
-        </div>
-        <div style={{ marginTop: '20px', width: '100%', maxWidth: '800px' }}>
-          {renderActiveComponent()}
-        </div>
+        </main>
+
+        {/* Footer Section */}
+        <footer className="bg-[#d43f5e] text-white text-center py-5 w-full">
+          <p>&copy; 2024 Wedding of Nidhi & Abhishek. All Rights Reserved.</p>
+        </footer>
       </div>
-       {/* Footer Section */}
-       <footer style={{ marginTop: '20px', textAlign: 'center', padding: '10px 0', backgroundColor: '#ffe6e9', width: '100%', borderTop: '1px solid #d43f5e' }}>
-        <p>&copy; 2024 Wedding of Nidhi & Abhishek. All Rights Reserved.</p>
-      </footer>
     </>
   );
 }

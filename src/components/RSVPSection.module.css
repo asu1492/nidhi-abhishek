@@ -56,3 +56,8 @@
     background-color: #c13552;
   }
   
+  .text, .message{
+    color: black !important;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }

@@ -1,5 +1,3 @@
-/* src/components/WeddingInvitation.module.css */
-
 .wrapper {
   max-width: 800px;
   margin: 0 auto;
@@ -51,6 +49,26 @@
 .dateInfo p {
   color: #555; /* Darker text for better readability */
   margin: 5px 0;
+}
+
+/* RSVP Button Style */
+.rsvpContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d43f5e; /* Darker pink for button */
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 20px auto;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.rsvpContainer:hover {
+  background-color: #c0392b; /* Slightly darker pink on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .mapContainer {
