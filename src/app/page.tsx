@@ -61,13 +61,13 @@ export default function Home() {
               <FaRegHandshake size={20} />
               <span>Itinerary</span>
             </div>
-            <div
+            {/* <div
               className="cursor-pointer flex items-center gap-1 text-white underline"
               onClick={() => setActiveComponent('gift')}
             >
               <FaGift size={20} />
               <span>Gift</span>
-            </div>
+            </div> */}
           </div>
         </header>
 
