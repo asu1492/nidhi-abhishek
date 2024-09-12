@@ -75,6 +75,10 @@
   margin-top: 10px;
 }
 
+.receptionInfo{
+  font-size: 3rem;
+}
+
 @media (max-width: 768px) {
   .contentContainer {
     font-size: large; /* Smaller font size for mobile */

@@ -1,37 +1,60 @@
-// src/components/RSVPSection.tsx
 "use client";
 import { useState } from 'react';
 import styles from './RSVPSection.module.css';
 
 const RSVPSection = () => {
-  const [name, setName] = useState('');
-  const [guests, setGuests] = useState('');
+  const [event, setEvent] = useState('');
+  const [guestName, setGuestName] = useState(''); // State for guest name
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [guests, setGuests] = useState('');
+  const [requirements, setRequirements] = useState('');
   const [message, setMessage] = useState('');
-  const [showMessage, setShowMessage] = useState(false); // State to control message visibility
+  const [showMessage, setShowMessage] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to manage button disabled state
 
+  const handleEventChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedEvent = e.target.value;
+    setEvent(selectedEvent);
+
+    if (selectedEvent === 'Marriage at Bijainagar') {
+      setDate('9th December'); // Set default date to 9th December
+      setTime('09:00'); // Set default time to 9 AM
+    } else if (selectedEvent === 'Reception at Bangalore') {
+      setDate('15th December'); // Set default date to 15th December
+      setTime('18:00'); // Set default time to 6 PM
+    } else {
+      setDate(''); // Reset date if no event selected
+      setTime(''); // Reset time if no event selected
+    }
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDate(e.target.value);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true); // Disable the submit button
 
     try {
-      // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       const targetUrl = 'https://us-central1-nomadic-coast-393105.cloudfunctions.net/rsvpProxy';
       const response = await fetch(targetUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, guests, date, time }),
+        body: JSON.stringify({ event, guestName, date, time, guests, requirements }),
       });
 
       if (response.ok) {
         setMessage('RSVP submitted successfully!');
-        setName('');
-        setGuests('');
+        setEvent('');
+        setGuestName('');
         setDate('');
         setTime('');
+        setGuests('');
+        setRequirements('');
       } else {
         setMessage('Failed to submit RSVP.');
       }
@@ -39,11 +62,11 @@ const RSVPSection = () => {
       setMessage('An error occurred while submitting RSVP.');
     }
 
-    setShowMessage(true); // Show the message
+    setShowMessage(true);
 
-    // Hide the message after 5 seconds
     setTimeout(() => {
       setShowMessage(false);
+      setIsSubmitting(false); // Re-enable the submit button after message hides
     }, 5000);
   };
 
@@ -53,15 +76,67 @@ const RSVPSection = () => {
       <p className={styles.text}>Please confirm your attendance by filling out the form below:</p>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
-          <label className={styles.label}>Name:</label>
+          <label className={styles.label}>Event:</label>
+          <select
+            name="event"
+            value={event}
+            onChange={handleEventChange}
+            required
+            className={styles.input}
+          >
+            <option value="" disabled>Select event</option>
+            <option value="Marriage at Bijainagar">Marriage at Bijainagar</option>
+            <option value="Reception at Bangalore">Reception at Bangalore</option>
+          </select>
+        </div>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Guest Name:</label>
           <input
             type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="guestName"
+            value={guestName}
+            onChange={(e) => setGuestName(e.target.value)}
             required
             className={styles.input}
             placeholder="Enter your name"
+          />
+        </div>
+        {event === 'Marriage at Bijainagar' && (
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Date:</label>
+            <select
+              name="date"
+              value={date}
+              onChange={handleDateChange}
+              required
+              className={styles.input}
+            >
+              <option value="9th December">9th December</option>
+              <option value="10th December">10th December</option>
+            </select>
+          </div>
+        )}
+        {event === 'Reception at Bangalore' && (
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Date:</label>
+            <input
+              type="text"
+              name="date"
+              value={date}
+              readOnly
+              className={styles.input}
+            />
+          </div>
+        )}
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Time:</label>
+          <input
+            type="time"
+            name="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            required
+            className={styles.input}
           />
         </div>
         <div className={styles.inputGroup}>
@@ -79,29 +154,17 @@ const RSVPSection = () => {
           />
         </div>
         <div className={styles.inputGroup}>
-          <label className={styles.label}>Date:</label>
-          <input
-            type="date"
-            name="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-            className={styles.input}
+          <label className={styles.label}>Any Specific Requirement:</label>
+          <textarea
+            name="requirements"
+            value={requirements}
+            onChange={(e) => setRequirements(e.target.value)}
+            className={styles.textarea}
+            placeholder="Enter any specific requirements"
           />
         </div>
-        <div className={styles.inputGroup}>
-          <label className={styles.label}>Time:</label>
-          <input
-            type="time"
-            name="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            required
-            className={styles.input}
-          />
-        </div>
-        <button type="submit" className={styles.button}>
-          Submit
+        <button type="submit" className={styles.button} disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>
       </form>
       {showMessage && message && <p className={styles.message}>{message}</p>}

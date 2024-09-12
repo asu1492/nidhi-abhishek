@@ -1,63 +1,69 @@
 /* src/components/RSVPSection.module.css */
 .container {
-    background-color: #fff7f8;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .heading {
-    color: #d43f5e;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .inputGroup {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  
-  .label {
-    display: block;
-    margin-bottom: 5px;
-    color: #d43f5e;
-    font-weight: bold;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #d43f5e;
-    box-sizing: border-box;
-    color: black;
-  }
-  
-  .button {
-    background-color: #d43f5e;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #c13552;
-  }
-  
-  .text, .message{
-    color: black !important;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
+  background-color: #fff7f8;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.heading {
+  color: #d43f5e;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputGroup {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 5px;
+  color: #d43f5e;
+  font-weight: bold;
+}
+
+.input, .textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #d43f5e;
+  box-sizing: border-box;
+  color: black;
+  font-size: 16px; /* Ensures consistent font size across inputs */
+}
+
+.textarea {
+  min-height: 100px; /* Ensure the textarea is tall enough */
+  resize: vertical;  /* Allow users to resize the textarea vertically */
+}
+
+.button {
+  background-color: #d43f5e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #c13552;
+}
+
+.text, .message {
+  color: black !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
