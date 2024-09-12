@@ -14,7 +14,7 @@ const WeddingInvitation: FC<WeddingInvitationProps> = ({ setActiveComponent }) =
     <div className={styles.wrapper}>
       <div className={styles.imageContainer}>
         <img
-          src="https://res.cloudinary.com/dg1nnxhed/image/upload/v1724941845/Screenshot_2024-08-29_at_8.00.20_PM_uiabxj.png"
+          src="https://res.cloudinary.com/dg1nnxhed/image/upload/v1726147524/Screenshot_2024-09-12_at_6.54.14_PM_ps0m8j.png"
           alt="Wedding Invitation Image"
         />
       </div>
