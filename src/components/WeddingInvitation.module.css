@@ -23,7 +23,7 @@
 
 .decorativeDivider {
   border-top: 2px solid #d43f5e; /* Darker pink divider */
-  width: 50%;
+  width: 70%;
   margin: 20px auto;
 }
 
@@ -86,6 +86,10 @@
 
 .receptionInfo{
   font-size: 3rem;
+  margin-top: 40px; /* Add space above the reception section */
+  background-color: pink;
+  border-radius: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 @media (max-width: 768px) {
