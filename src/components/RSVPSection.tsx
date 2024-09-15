@@ -72,7 +72,7 @@ const RSVPSection = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>RSVP Section</h2>
+      <h2 className="text-4xl font-bold text-center text-red-600 mb-12">RSVP Section</h2>
       <p className={styles.text}>Please confirm your attendance by filling out the form below:</p>
       <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>

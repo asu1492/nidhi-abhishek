@@ -7,11 +7,18 @@ import { FaRegHandshake } from "react-icons/fa";
 // Define prop types for WeddingInvitation
 interface WeddingInvitationProps {
   setActiveComponent: (component: string) => void; // Type for setActiveComponent function
+  itineraryRef: React.RefObject<HTMLDivElement>; // Passing the ref for the Itinerary section
 }
 
 const WeddingInvitation: FC<WeddingInvitationProps> = ({
   setActiveComponent,
+  itineraryRef,
 }) => {
+  // Scroll to the itinerary section
+  const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
+    sectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.imageContainer}>
@@ -42,13 +49,13 @@ const WeddingInvitation: FC<WeddingInvitationProps> = ({
         </div>
 
         {/* Styled RSVP Button */}
-        <div
+        {/* <div
           className={styles.rsvpContainer}
-          onClick={() => setActiveComponent("rsvp")}
+          onClick={() => scrollToSection(itineraryRef)} // Using the passed itineraryRef here
         >
           <FaRegHandshake size={20} />
-          <span>RSVP Now</span>
-        </div>
+          <span>See Itinerary</span>
+        </div> */}
 
         {/* Location Map for Wedding */}
         <div className={styles.section}>
@@ -89,7 +96,7 @@ const WeddingInvitation: FC<WeddingInvitationProps> = ({
         <div className={styles.venueInfo}>
           <h3>Venue</h3>
           <p>
-            <strong>Sainik Institue</strong>
+            <strong>Sainik Institute</strong>
           </p>
           <p>
             Near Chopra Auditorium, ASC Center & College, Viveknagar,
@@ -98,13 +105,13 @@ const WeddingInvitation: FC<WeddingInvitationProps> = ({
         </div>
 
         {/* Styled RSVP Button */}
-        <div
+        {/* <div
           className={styles.rsvpContainer}
           onClick={() => setActiveComponent("rsvp")}
         >
           <FaRegHandshake size={20} />
           <span>RSVP Now</span>
-        </div>
+        </div> */}
 
         {/* Location Map for Reception */}
         <div className={styles.section}>
