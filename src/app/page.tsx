@@ -5,6 +5,7 @@ import Head from "next/head";
 import WeddingInvitation from "../components/WeddingInvitation";
 import RSVPSection from "../components/RSVPSection";
 import ItinerarySection from "../components/ItinerarySection";
+import HowToReachSection from "../components/HowToReachSection"; // Importing the new section
 import { FaRegHandshake, FaHeart } from "react-icons/fa";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
   const weddingRef = useRef<HTMLDivElement>(null);
   const rsvpRef = useRef<HTMLDivElement>(null);
   const itineraryRef = useRef<HTMLDivElement>(null);
+  const howToReachRef = useRef<HTMLDivElement>(null); // Ref for the new section
 
   // Intersection observer setup
   useEffect(() => {
@@ -36,11 +38,13 @@ export default function Home() {
     if (weddingRef.current) observer.observe(weddingRef.current);
     if (rsvpRef.current) observer.observe(rsvpRef.current);
     if (itineraryRef.current) observer.observe(itineraryRef.current);
+    if (howToReachRef.current) observer.observe(howToReachRef.current); // Observing the new section
 
     return () => {
       if (weddingRef.current) observer.unobserve(weddingRef.current);
       if (rsvpRef.current) observer.unobserve(rsvpRef.current);
       if (itineraryRef.current) observer.unobserve(itineraryRef.current);
+      if (howToReachRef.current) observer.unobserve(howToReachRef.current); // Unobserving the new section
     };
   }, []);
 
@@ -99,7 +103,7 @@ export default function Home() {
           <section
             id="wedding"
             ref={weddingRef}
-            className="w-full max-w-xl text-center mx-auto py-16"
+            className="w-full max-w-xl text-center mx-auto "
           >
             <WeddingInvitation
               setActiveComponent={setActiveSection}
@@ -110,7 +114,7 @@ export default function Home() {
           <section
             id="rsvp"
             ref={rsvpRef}
-            className="w-full max-w-xl text-center mx-auto py-16"
+            className="w-full max-w-xl text-center mx-auto "
           >
             <RSVPSection />
           </section>
@@ -118,9 +122,17 @@ export default function Home() {
           <section
             id="itinerary"
             ref={itineraryRef}
-            className="w-full max-w-xl text-center mx-auto py-16"
+            className="w-full max-w-xl text-center mx-auto "
           >
             <ItinerarySection />
+          </section>
+
+          <section
+            id="how-to-reach"
+            ref={howToReachRef}
+            className="w-full max-w-xl text-center mx-auto bg-[#f8f8f8] py-8 px-4" // Matching background color with the itinerary section
+          >
+            <HowToReachSection />
           </section>
         </main>
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './ItinerarySection.module.css';
 
 interface Event {
   time: string;
@@ -84,37 +85,37 @@ const ItinerarySection: React.FC = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-red-100 to-pink-100 min-h-screen p-8">
+    <div className={styles.container}>
       <h2 className="text-4xl font-bold text-center text-red-600 mb-12">Wedding Itinerary</h2>
       {events.map((eventDay, index) => (
-        <div key={index} className="mb-8 bg-white rounded-lg shadow-lg overflow-hidden">
+        <div key={index} className={styles.timelineGroup}>
           <div 
-            className="bg-gradient-to-r from-red-500 to-pink-500 p-4 cursor-pointer flex justify-between items-center"
+            className={styles.toggleHeader}
             onClick={() => toggleDay(index)}
           >
-            <h3 className="text-2xl font-semibold text-white">{eventDay.date}</h3>
-            <div className="text-white">
+            <h3 className="text-2xl font-semibold">{eventDay.date}</h3>
+            <div className={styles.icon}>
               {expandedDays.get(index) ? <ChevronUp /> : <ChevronDown />}
             </div>
           </div>
           {expandedDays.get(index) && (
-            <div className="p-6">
+            <div className={styles.timelineContent}>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h4 className="text-xl font-semibold text-red-700 mb-4">Abhishek&apos;s Function</h4>
                   {eventDay.abhishekEvents.map((event, i) => (
-                    <div key={i} className="mb-3 pb-3 border-b border-gray-200 last:border-b-0">
-                      <div className="font-medium text-red-600">{event.time}</div>
-                      <div className="text-gray-700">{event.event}</div>
+                    <div key={i} className={styles.eventGroup}>
+                      <div className={styles.eventTime}>{event.time}</div>
+                      <div className={styles.eventDescription}>{event.event}</div>
                     </div>
                   ))}
                 </div>
                 <div>
                   <h4 className="text-xl font-semibold text-red-700 mb-4">Nidhi&apos;s Function</h4>
                   {eventDay.nidhiEvents.map((event, i) => (
-                    <div key={i} className="mb-3 pb-3 border-b border-gray-200 last:border-b-0">
-                      <div className="font-medium text-red-600">{event.time}</div>
-                      <div className="text-gray-700">{event.event}</div>
+                    <div key={i} className={styles.eventGroup}>
+                      <div className={styles.eventTime}>{event.time}</div>
+                      <div className={styles.eventDescription}>{event.event}</div>
                     </div>
                   ))}
                 </div>
