@@ -37,15 +37,33 @@ const RSVPSection = () => {
     e.preventDefault();
     setIsSubmitting(true); // Disable the submit button
 
+    const formData = new FormData();
+    formData.append('event', event);
+    formData.append('guestName', guestName);
+    formData.append('date', date);
+    formData.append('time', time);
+    formData.append('guests', guests);
+    formData.append('requirements', requirements);
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
+
+
     try {
-      const targetUrl = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
-      const response = await fetch(targetUrl, {
+
+      const response = await fetch(scriptURL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ event, guestName, date, time, guests, requirements }),
+        body: formData,
+        mode: 'no-cors'
       });
+
+      // const targetUrl = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
+      // const response = await fetch(targetUrl, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ event, guestName, date, time, guests, requirements }),
+      // });
 
       if (response.ok) {
         setMessage('RSVP submitted successfully!');
