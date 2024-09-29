@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import styles from './RSVPSection.module.css';
 
 const RSVPSection = () => {
@@ -12,6 +12,8 @@ const RSVPSection = () => {
   const [message, setMessage] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // State to manage button disabled state
+  const formRef = useRef<HTMLFormElement>(null);
+
 
   const handleEventChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedEvent = e.target.value;
@@ -33,70 +35,40 @@ const RSVPSection = () => {
     setDate(e.target.value);
   };
 
-  interface SubmitResponse {
-    result: string;
-  }
-
-  const submitForm = useCallback((data: SubmitResponse) => {
-    setIsSubmitting(false);
-    if (data.result === 'success') {
-      setMessage('RSVP submitted successfully!');
-      setEvent('');
-      setGuestName('');
-      setDate('');
-      setTime('');
-      setGuests('');
-      setRequirements('');
-    } else {
-      setMessage('Failed to submit RSVP. Please try again.');
-    }
-    setShowMessage(true);
-    setTimeout(() => setShowMessage(false), 5000);
-  }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const script = document.createElement('script');
-    const scriptId = 'jsonp-script';
-    const callback = 'jsonpCallback';
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
 
-    // Define the callback function with proper typing
-    (window as any)[callback] = (data: SubmitResponse) => {
-      submitForm(data);
-      delete (window as any)[callback];
-      const scriptElement = document.getElementById(scriptId);
-      if (scriptElement && scriptElement.parentNode) {
-        scriptElement.parentNode.removeChild(scriptElement);
-      }
-    };
-
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
-    const url = new URL(scriptURL);
-    url.searchParams.append('callback', callback);
-    url.searchParams.append('event', event);
-    url.searchParams.append('guestName', guestName);
-    url.searchParams.append('date', date);
-    url.searchParams.append('time', time);
-    url.searchParams.append('guests', guests);
-    url.searchParams.append('requirements', requirements);
-
-    script.src = url.toString();
-    script.id = scriptId;
-    script.onerror = () => {
-      setIsSubmitting(false);
-      setMessage('An error occurred while submitting RSVP.');
-      setShowMessage(true);
-      setTimeout(() => setShowMessage(false), 5000);
-      delete (window as any)[callback];
-      const scriptElement = document.getElementById(scriptId);
-      if (scriptElement && scriptElement.parentNode) {
-        scriptElement.parentNode.removeChild(scriptElement);
-      }
-    };
-
-    document.body.appendChild(script);
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => response.json())
+        .then(data => {
+          setIsSubmitting(false);
+          if (data.result === 'success') {
+            setMessage('RSVP submitted successfully!');
+            setEvent('');
+            setGuestName('');
+            setDate('');
+            setTime('');
+            setGuests('');
+            setRequirements('');
+          } else {
+            setMessage('Failed to submit RSVP. Please try again.');
+          }
+          setShowMessage(true);
+          setTimeout(() => setShowMessage(false), 5000);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          setIsSubmitting(false);
+          setMessage('An error occurred while submitting RSVP.');
+          setShowMessage(true);
+          setTimeout(() => setShowMessage(false), 5000);
+        });
+    }
   };
   return (
     <div className={styles.container}>
