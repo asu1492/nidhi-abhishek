@@ -38,7 +38,7 @@ const RSVPSection = () => {
     setIsSubmitting(true); // Disable the submit button
 
     try {
-      const targetUrl = 'https://us-central1-nomadic-coast-393105.cloudfunctions.net/rsvpProxy';
+      const targetUrl = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
       const response = await fetch(targetUrl, {
         method: 'POST',
         headers: {
