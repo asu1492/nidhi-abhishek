@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styles from './RSVPSection.module.css';
 
 const RSVPSection = () => {
@@ -33,61 +33,71 @@ const RSVPSection = () => {
     setDate(e.target.value);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true); // Disable the submit button
+  interface SubmitResponse {
+    result: string;
+  }
 
-    const formData = new FormData();
-    formData.append('event', event);
-    formData.append('guestName', guestName);
-    formData.append('date', date);
-    formData.append('time', time);
-    formData.append('guests', guests);
-    formData.append('requirements', requirements);
+  const submitForm = useCallback((data: SubmitResponse) => {
+    setIsSubmitting(false);
+    if (data.result === 'success') {
+      setMessage('RSVP submitted successfully!');
+      setEvent('');
+      setGuestName('');
+      setDate('');
+      setTime('');
+      setGuests('');
+      setRequirements('');
+    } else {
+      setMessage('Failed to submit RSVP. Please try again.');
+    }
+    setShowMessage(true);
+    setTimeout(() => setShowMessage(false), 5000);
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const script = document.createElement('script');
+    const scriptId = 'jsonp-script';
+    const callback = 'jsonpCallback';
+
+    // Define the callback function with proper typing
+    (window as any)[callback] = (data: SubmitResponse) => {
+      submitForm(data);
+      delete (window as any)[callback];
+      const scriptElement = document.getElementById(scriptId);
+      if (scriptElement && scriptElement.parentNode) {
+        scriptElement.parentNode.removeChild(scriptElement);
+      }
+    };
 
     const scriptURL = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
+    const url = new URL(scriptURL);
+    url.searchParams.append('callback', callback);
+    url.searchParams.append('event', event);
+    url.searchParams.append('guestName', guestName);
+    url.searchParams.append('date', date);
+    url.searchParams.append('time', time);
+    url.searchParams.append('guests', guests);
+    url.searchParams.append('requirements', requirements);
 
-
-    try {
-
-      const response = await fetch(scriptURL, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors'
-      });
-
-      // const targetUrl = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
-      // const response = await fetch(targetUrl, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ event, guestName, date, time, guests, requirements }),
-      // });
-
-      if (response.ok) {
-        setMessage('RSVP submitted successfully!');
-        setEvent('');
-        setGuestName('');
-        setDate('');
-        setTime('');
-        setGuests('');
-        setRequirements('');
-      } else {
-        setMessage('Failed to submit RSVP.');
-      }
-    } catch (error) {
+    script.src = url.toString();
+    script.id = scriptId;
+    script.onerror = () => {
+      setIsSubmitting(false);
       setMessage('An error occurred while submitting RSVP.');
-    }
+      setShowMessage(true);
+      setTimeout(() => setShowMessage(false), 5000);
+      delete (window as any)[callback];
+      const scriptElement = document.getElementById(scriptId);
+      if (scriptElement && scriptElement.parentNode) {
+        scriptElement.parentNode.removeChild(scriptElement);
+      }
+    };
 
-    setShowMessage(true);
-
-    setTimeout(() => {
-      setShowMessage(false);
-      setIsSubmitting(false); // Re-enable the submit button after message hides
-    }, 5000);
+    document.body.appendChild(script);
   };
-
   return (
     <div className={styles.container}>
       <h2 className="text-4xl font-bold text-center text-red-600 mb-12">RSVP Section</h2>
