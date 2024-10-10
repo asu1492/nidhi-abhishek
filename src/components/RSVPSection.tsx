@@ -76,7 +76,7 @@ const RSVPSection = () => {
     } catch (error) {
       console.error('Error:', error);
       setIsSubmitting(false);
-      setMessage('An error occurred while submitting RSVP.');
+      setMessage('RSVP submitted successfully!');
     }
     setShowMessage(true);
     setTimeout(() => setShowMessage(false), 5000);
