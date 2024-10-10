@@ -35,41 +35,53 @@ const RSVPSection = () => {
     setDate(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbw3a8Axe4QNGufA5YSvlXnwd8Y1Ay7ubphQf6b0M73_ncHWgvvugfTDWUpvIgvKPDD-eg/exec';
-
-      fetch(scriptURL, { method: 'POST', body: formData })
-        .then(response => response.json())
-        .then(data => {
-          setIsSubmitting(false);
-          if (data.result === 'success') {
-            setMessage('RSVP submitted successfully!');
-            setEvent('');
-            setGuestName('');
-            setDate('');
-            setTime('');
-            setGuests('');
-            setRequirements('');
-          } else {
-            setMessage('Failed to submit RSVP. Please try again.');
-          }
-          setShowMessage(true);
-          setTimeout(() => setShowMessage(false), 5000);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          setIsSubmitting(false);
-          setMessage('An error occurred while submitting RSVP.');
-          setShowMessage(true);
-          setTimeout(() => setShowMessage(false), 5000);
-        });
+  
+    const jsonData = {
+      event,
+      guestName,
+      guests: parseInt(guests),
+      date,
+      time,
+      requirements
+    };
+  
+    try {
+      const response = await fetch('https://iwko44atoei2fswg554btnowaa0pmcte.lambda-url.eu-north-1.on.aws', {
+        method: 'POST',
+        mode: 'cors', // Add this line
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(jsonData),
+      });
+  
+      const data = await response.json();
+  
+      setIsSubmitting(false);
+      if (data.result === 'success') {
+        setMessage('RSVP submitted successfully!');
+        // Reset form fields
+        setEvent('');
+        setGuestName('');
+        setDate('');
+        setTime('');
+        setGuests('');
+        setRequirements('');
+      } else {
+        setMessage('Failed to submit RSVP. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setIsSubmitting(false);
+      setMessage('An error occurred while submitting RSVP.');
     }
+    setShowMessage(true);
+    setTimeout(() => setShowMessage(false), 5000);
   };
+
   return (
     <div className={styles.container}>
       <h2 className="text-4xl font-bold text-center text-red-600 mb-12">RSVP Section</h2>
