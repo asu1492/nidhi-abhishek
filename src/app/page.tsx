@@ -5,8 +5,9 @@ import Head from "next/head";
 import WeddingInvitation from "../components/WeddingInvitation";
 import RSVPSection from "../components/RSVPSection";
 import ItinerarySection from "../components/ItinerarySection";
-import HowToReachSection from "../components/HowToReachSection"; // Importing the new section
-import { FaRegHandshake, FaHeart } from "react-icons/fa";
+import HowToReachSection from "../components/HowToReachSection";
+import FileUpload from "../components/uploadWeddingPhotos"; // Import the FileUpload component
+import { FaRegHandshake, FaHeart, FaCamera } from "react-icons/fa";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("wedding");
@@ -15,14 +16,15 @@ export default function Home() {
   const weddingRef = useRef<HTMLDivElement>(null);
   const rsvpRef = useRef<HTMLDivElement>(null);
   const itineraryRef = useRef<HTMLDivElement>(null);
-  const howToReachRef = useRef<HTMLDivElement>(null); // Ref for the new section
+  const howToReachRef = useRef<HTMLDivElement>(null);
+  const uploadRef = useRef<HTMLDivElement>(null); // New ref for upload section
 
   // Intersection observer setup
   useEffect(() => {
     const options = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.3, // Adjust this threshold to trigger earlier or later
+      threshold: 0.3,
     };
 
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
@@ -38,13 +40,15 @@ export default function Home() {
     if (weddingRef.current) observer.observe(weddingRef.current);
     if (rsvpRef.current) observer.observe(rsvpRef.current);
     if (itineraryRef.current) observer.observe(itineraryRef.current);
-    if (howToReachRef.current) observer.observe(howToReachRef.current); // Observing the new section
+    if (howToReachRef.current) observer.observe(howToReachRef.current);
+    if (uploadRef.current) observer.observe(uploadRef.current); // Observing the new upload section
 
     return () => {
       if (weddingRef.current) observer.unobserve(weddingRef.current);
       if (rsvpRef.current) observer.unobserve(rsvpRef.current);
       if (itineraryRef.current) observer.unobserve(itineraryRef.current);
-      if (howToReachRef.current) observer.unobserve(howToReachRef.current); // Unobserving the new section
+      if (howToReachRef.current) observer.unobserve(howToReachRef.current);
+      if (uploadRef.current) observer.unobserve(uploadRef.current); // Unobserving the new upload section
     };
   }, []);
 
@@ -61,13 +65,13 @@ export default function Home() {
 
       <div className="relative min-h-screen bg-white flex flex-col">
         {/* Header Section */}
-        <header className="bg-[#d43f5e] py-5 text-white text-center relative sticky top-0 z-50">
+        <header className="bg-[#d43f5e] text-white text-center relative sticky top-0 z-50">
           <p className="m-0 text-xl">Wedding Celebration</p>
-          <h1 className="m-0 font-[Brush Script MT] text-4xl mt-4">
+          <h1 className="m-0 font-[Brush Script MT] text-[2rem] leading-[1.5rem] mt-4">
             Nidhi & Abhishek
           </h1>
           {/* Navigation Links */}
-          <div className="flex flex-row gap-4 mt-4 justify-center">
+          <div className="flex flex-row gap-4 mt-4 justify-center flex-wrap">
             <div
               className={`cursor-pointer flex items-center gap-1 text-white underline ${
                 activeSection === "wedding" ? "font-bold" : ""
@@ -95,6 +99,15 @@ export default function Home() {
               <FaRegHandshake size={20} />
               <span>Itinerary</span>
             </div>
+            {/* <div
+              className={`cursor-pointer flex items-center gap-1 text-white underline ${
+                activeSection === "upload" ? "font-bold" : ""
+              }`}
+              onClick={() => scrollToSection(uploadRef)}
+            >
+              <FaCamera size={20} />
+              <span>Upload Photos</span>
+            </div> */}
           </div>
         </header>
 
@@ -107,7 +120,7 @@ export default function Home() {
           >
             <WeddingInvitation
               setActiveComponent={setActiveSection}
-              itineraryRef={itineraryRef} // Passing the itineraryRef here
+              itineraryRef={itineraryRef}
             />
           </section>
 
@@ -130,9 +143,18 @@ export default function Home() {
           <section
             id="how-to-reach"
             ref={howToReachRef}
-            className="w-full max-w-xl text-center mx-auto bg-[#f8f8f8] py-8 px-4" // Matching background color with the itinerary section
+            className="w-full max-w-xl text-center mx-auto bg-[#f8f8f8] py-8 px-4"
           >
             <HowToReachSection />
+          </section>
+
+          <section
+            id="upload"
+            ref={uploadRef}
+            className="w-full max-w-xl text-center mx-auto bg-[#f8f8f8] py-8 px-4"
+          >
+            <h2 className="text-2xl font-bold mb-4">Upload Wedding Photos</h2>
+            <FileUpload />
           </section>
         </main>
 
