@@ -6,8 +6,7 @@ import WeddingInvitation from "../components/WeddingInvitation";
 import RSVPSection from "../components/RSVPSection";
 import ItinerarySection from "../components/ItinerarySection";
 import HowToReachSection from "../components/HowToReachSection";
-import FileUpload from "../components/uploadWeddingPhotos"; // Import the FileUpload component
-import { FaRegHandshake, FaHeart, FaCamera } from "react-icons/fa";
+import { FaRegHandshake, FaHeart } from "react-icons/fa";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string>("wedding");
@@ -17,7 +16,6 @@ export default function Home() {
   const rsvpRef = useRef<HTMLDivElement>(null);
   const itineraryRef = useRef<HTMLDivElement>(null);
   const howToReachRef = useRef<HTMLDivElement>(null);
-  const uploadRef = useRef<HTMLDivElement>(null); // New ref for upload section
 
   // Intersection observer setup
   useEffect(() => {
@@ -41,14 +39,11 @@ export default function Home() {
     if (rsvpRef.current) observer.observe(rsvpRef.current);
     if (itineraryRef.current) observer.observe(itineraryRef.current);
     if (howToReachRef.current) observer.observe(howToReachRef.current);
-    if (uploadRef.current) observer.observe(uploadRef.current); // Observing the new upload section
-
     return () => {
       if (weddingRef.current) observer.unobserve(weddingRef.current);
       if (rsvpRef.current) observer.unobserve(rsvpRef.current);
       if (itineraryRef.current) observer.unobserve(itineraryRef.current);
       if (howToReachRef.current) observer.unobserve(howToReachRef.current);
-      if (uploadRef.current) observer.unobserve(uploadRef.current); // Unobserving the new upload section
     };
   }, []);
 
@@ -99,15 +94,6 @@ export default function Home() {
               <FaRegHandshake size={20} />
               <span>Itinerary</span>
             </div>
-            {/* <div
-              className={`cursor-pointer flex items-center gap-1 text-white underline ${
-                activeSection === "upload" ? "font-bold" : ""
-              }`}
-              onClick={() => scrollToSection(uploadRef)}
-            >
-              <FaCamera size={20} />
-              <span>Upload Photos</span>
-            </div> */}
           </div>
         </header>
 
@@ -146,15 +132,6 @@ export default function Home() {
             className="w-full max-w-xl text-center mx-auto bg-[#f8f8f8] py-8 px-4"
           >
             <HowToReachSection />
-          </section>
-
-          <section
-            id="upload"
-            ref={uploadRef}
-            className="w-full max-w-xl text-center mx-auto bg-[#f8f8f8] py-8 px-4"
-          >
-            <h2 className="text-2xl font-bold mb-4">Upload Wedding Photos</h2>
-            <FileUpload />
           </section>
         </main>
 
