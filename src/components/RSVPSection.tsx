@@ -77,6 +77,13 @@ const RSVPSection = () => {
       console.error('Error:', error);
       setIsSubmitting(false);
       setMessage('RSVP submitted successfully!');
+       // Reset form fields
+       setEvent('');
+       setGuestName('');
+       setDate('');
+       setTime('');
+       setGuests('');
+       setRequirements('');
     }
     setShowMessage(true);
     setTimeout(() => setShowMessage(false), 5000);
