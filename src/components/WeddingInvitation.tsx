@@ -23,7 +23,7 @@ const WeddingInvitation: FC<WeddingInvitationProps> = ({
     <div className={styles.wrapper}>
       <div className={styles.imageContainer}>
         <img
-          src="https://res.cloudinary.com/dg1nnxhed/image/upload/v1726147524/Screenshot_2024-09-12_at_6.54.14_PM_ps0m8j.png"
+          src="https://res.cloudinary.com/dg1nnxhed/image/upload/v1733061323/Screenshot_2024-12-01_at_7.15.38_PM_vlhwt2.png"
           alt="Wedding Invitation Image"
         />
       </div>
